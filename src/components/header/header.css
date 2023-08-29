@@ -1,0 +1,47 @@
+.banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 25px;
+  box-sizing: content-box;
+  border-bottom: 1px solid var(--color_principal);
+}
+
+.identificador {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: default;
+  user-select: none;
+  cursor: pointer;
+}
+
+.logo {
+  margin: 0;
+  width: 36px;
+  height: 36px;
+}
+
+.titulo_principal {
+  margin: 0;
+  font-family: "Oswald", Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 24px;
+}
+
+@media (max-width: 409px) {
+  .titulo_principal {
+    font-size: large;
+  }
+}
+
+@media (max-width: 330px) {
+  .titulo_principal{
+    font-size: medium;
+  }
+}
+
+@media (max-width: 304px) {
+  .titulo_principal {
+    font-size: small;
+  }
+}

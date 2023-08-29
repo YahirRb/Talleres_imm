@@ -27,6 +27,20 @@ export const RouterHead = component$(() => {
       {head.styles.map((s) => (
         <style key={s.key} {...s.props} dangerouslySetInnerHTML={s.style} />
       ))}
+
+      <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
+    {/* <style>
+      .material-symbols-outlined {
+        font-variation-settings: "FILL" 1, "wght" 700, "GRAD" 0, "opsz" 48;
+      }
+    </style> */}
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
     </>
   );
 });

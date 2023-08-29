@@ -1,35 +1,34 @@
+@import url("https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;700&family=Oswald&display=swap");
 
+:root {
+  --color_principal: #d43b69;
+  --color_secundario: #b121ff;
+  --color_fondo: #ffffff;
+  --color_texto: #000000;
+  font-family: "Fira Sans", Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 16px;
+}
 
-/**
- * WHAT IS THIS FILE?
- *
- * Globally applied styles. No matter which components are in the page or matching route,
- * the styles in here will be applied to the Document, without any sort of CSS scoping.
- *
- */
 html {
-  -webkit-text-size-adjust: 100%;
-  -moz-tab-size: 4;
-  -o-tab-size: 4;
-  tab-size: 4;
-  font-family:
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    "Helvetica Neue",
-    Arial,
-    "Noto Sans",
-    sans-serif,
-    "Apple Color Emoji",
-    "Segoe UI Emoji",
-    "Segoe UI Symbol",
-    "Noto Color Emoji";
+  width: 100%;
+  height: 100%;
+  box-sizing: content-box;
 }
 
 body {
-  padding: 0;
-  line-height: inherit;
+  width: 100%;
+  height: 100%;
+  box-sizing: content-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.enlaces {
+  color: var(--color_principal);
+  text-decoration: none;
+}
+
+.enlaces:hover {
+  color: var(--color_secundario);
+  text-decoration: underline;
 }

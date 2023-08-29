@@ -1,0 +1,135 @@
+body {
+  display: flex;
+}
+
+.main_registro {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 25px;
+  padding: 25px 0;
+  box-sizing: content-box;
+}
+
+.campo_formulario {
+  position: relative;
+  justify-self: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 25px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.campo_formulario input {
+  padding: 7px 10px;
+  background-color: var(--color_fondo);
+  color: var(--color_texto);
+  border: 2px solid var(--color_principal);
+  border-radius: 15px;
+  transition: border-color 0.4s ease-in;
+}
+
+.campo_formulario input:focus {
+  outline: 0;
+  border-color: var(--color_secundario);
+}
+
+.advertencia_campo {
+  position: absolute;
+  display: none;
+  top: 30px;
+  color: red;
+}
+
+.btn_submit {
+  min-width: 150px;
+  max-width: 250px;
+  margin: 15px auto;
+  padding: 15px;
+  background-color: var(--color_principal);
+  color: var(--color_fondo);
+  border: none;
+  border-radius: 25px;
+  transition: background-color 0.4s ease-in;
+  cursor: pointer;
+}
+
+.btn_submit:hover {
+  background-color: var(--color_secundario);
+}
+
+@media (max-width: 500px) {
+  .main_registro {
+    overflow-y: auto;
+    align-items: flex-start;
+  }
+
+  .titulo_principal {
+    font-size: large;
+  }
+
+  .formulario {
+    width: 80%;
+    padding: 25px 0;
+    gap: 15px;
+  }
+
+  .campo_formulario {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .advertencia_campo {
+    top: 60px;
+  }
+
+  .btn_submit {
+    margin-top: 25px;
+  }
+}
+
+@media (max-width: 331px) {
+  .titulo_principal {
+    font-size: medium;
+  }
+}
+
+@media (max-width: 304px) {
+  .titulo_principal {
+    font-size: small;
+  }
+}
+
+@media (max-height: 595px) {
+  main {
+    overflow-y: auto;
+  }
+}
+
+.main_recuperarcontra {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  overflow-y: auto;
+}
