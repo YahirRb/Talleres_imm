@@ -9,20 +9,7 @@ export default component$(() => {
   return (
     <>
       <main class="main_registro">
-        <form
-          class="formulario"
-          id="form_registro"
-          onSubmit$={(event) => {
-            // event.preventDefault()
-            // const contrasena = event.target.contrasena
-            // const confContrasena = event.target.confContrasena
-            // if (contrasena.value != confContrasena.value) {
-            //   mostrarSnacks("inferior", "Las contraseñas ingresadas deben ser iguales")
-            // } else {
-            //   mostrarSnacks("superior", "Normalmente el empleado sería registrado.")
-            // }
-          }}
-        >
+        <form class="formulario" id="form_registro" onSubmit$={(event) => {}}>
           <span class="campo_formulario" id="campo_nombres">
             <label for="nombres">Nombre(s)*:</label>
             <input

@@ -2,6 +2,8 @@ import { component$, useSignal, useStylesScoped$ } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 
 import styles from "./login.css?inline";
+import IMMLogo from "~/media/assets/logo.png?jsx";
+import BGLogin from "~/media/assets/img_login.jpg?jsx";
 
 export default component$(() => {
   useStylesScoped$(styles);
@@ -11,17 +13,13 @@ export default component$(() => {
   return (
     <>
       <main>
-        <div class="cont_logo">
-          <img
-            src="/assets/img_login.jpg"
-            alt="Imagen de fondo"
-            class="img_fondo"
-          ></img>
-          <img
-            src="/assets/logo.png"
-            alt="Logo del IMM"
-            class="logo_login"
-          ></img>
+        <div class="cont_img">
+          <span class="img_fondo">
+            <BGLogin />
+          </span>
+          <span class="logo_login">
+            <IMMLogo />
+          </span>
           <span class="atribucion">
             Foto de{" "}
             <a href="https://unsplash.com/es/@kmagnuson?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">

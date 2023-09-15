@@ -1,20 +1,23 @@
 import { component$, useStylesScoped$ } from "@builder.io/qwik";
 
 import styles from "./header.css?inline";
+import IMMLogo from "~/media/assets/logo.png?jsx";
 
 export const Header = component$(() => {
   useStylesScoped$(styles);
   return (
     <header class="banner">
-      <span
+      <div
         class="identificador"
         onClick$={() => {
           window.location.href = "/";
         }}
       >
-        <img class="logo" src="/assets/logo.png" alt="Logo" />
+        <span class="logo">
+          <IMMLogo />
+        </span>
         <h1 class="titulo_principal">INSTITUTO MUNICIPAL DE LA MUJER</h1>
-      </span>
+      </div>
     </header>
   );
 });

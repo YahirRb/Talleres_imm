@@ -20,6 +20,13 @@
   margin: 0;
   width: 36px;
   height: 36px;
+  position: relative;
+}
+
+.logo img {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 .titulo_principal {
@@ -35,7 +42,7 @@
 }
 
 @media (max-width: 330px) {
-  .titulo_principal{
+  .titulo_principal {
     font-size: medium;
   }
 }
