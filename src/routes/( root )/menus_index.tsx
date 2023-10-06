@@ -1,4 +1,4 @@
-import { component$, useSignal, useStylesScoped$ } from "@builder.io/qwik";
+import { component$, useSignal } from "@builder.io/qwik";
 
 import "./menus_index.css";
 
@@ -65,7 +65,6 @@ const OptsMeses = Object.entries(meses).map(([numeroMes, nombreMes]) => {
 });
 
 export const AgregarTaller = component$(() => {
-  const mesTaller = useSignal(String(new Date().getMonth() + 1));
 
   return (
     <>
@@ -135,3 +134,76 @@ export const AgregarTaller = component$(() => {
     </>
   );
 });
+
+export const ListaTalleres = component$(() => {
+  const expandido = useSignal(false);
+
+  return (
+    <>
+      <section class="lista_talleres" >
+        <article class="taller_registro" >
+          <div class="info_taller" id="info_taller">
+            <span class="datos_registro_taller" >
+              <p>Nombre: John Doe</p>
+              <p>Imparte: Jane Doe </p>
+              <p>Fecha: 31/02/2023 </p>
+              <p>Cupo actual: 5 personas </p>
+            </span>
+            <span class="boton_taller abrir_opciones" onClick$={() => {
+              const info_taller = document.getElementById("info_taller") as HTMLElement;
+              const opciones_taller = document.getElementById("opciones_taller") as HTMLElement;
+              const icono_expandido = document.getElementById("abrir_opciones") as HTMLElement;
+              if (expandido.value) {
+                expandido.value = false;
+
+                info_taller.style.borderRadius = "25px"
+
+                opciones_taller.style.width = "0";
+                opciones_taller.style.height = "0";
+                opciones_taller.style.padding = "0";
+                opciones_taller.style.border = "none"
+
+                icono_expandido.classList.remove("bi-arrow-bar-left")
+                icono_expandido.classList.add("bi-arrow-bar-right")
+              } else {
+                expandido.value = true;
+
+                info_taller.style.borderRadius = "25px 0 0 25px"
+
+                opciones_taller.style.width = "auto";
+                opciones_taller.style.height = "auto";
+                opciones_taller.style.padding = "15px";
+                opciones_taller.style.border = "1px solid var(--color_principal)"
+                opciones_taller.style.borderLeft = "none"
+
+                icono_expandido.classList.remove("bi-arrow-bar-right")
+                icono_expandido.classList.add("bi-arrow-bar-left")
+              }
+            }} >
+              <p>Opciones</p>
+              <i class="bi bi-arrow-bar-right" id="abrir_opciones"></i>
+            </span>
+          </div>
+          <div class="opciones_taller" id="opciones_taller" >
+            <span class="boton_taller">
+              <p>Editar taller</p>
+              <i class="bi bi-pencil-square"></i>
+            </span>
+            <span class="boton_taller">
+              <p>Ver lista de asistentes</p>
+              <i class="bi bi-person"></i>
+            </span>
+            <span class="boton_taller">
+              <p>Agregar asistente</p>
+              <i class="bi bi-person-add"></i>
+            </span>
+            <span class="boton_taller">
+              <p>Eliminar taller</p>
+              <i class="bi bi-trash3-fill"></i>
+            </span>
+          </div>
+        </article>
+      </section>
+    </>
+  )
+})

@@ -22,7 +22,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 25px;
+  gap: 35px;
   margin: auto;
   padding: 25px;
 }
@@ -40,7 +40,7 @@
 
 .input_form {
   width: 50%;
-  padding: 5px 10px;
+  padding: 10px;
   border: 2px solid var(--color_principal);
   border-radius: 15px;
   outline: 0;
@@ -68,6 +68,69 @@
 
 /* ************************************************* */
 /* Lista de talleres */
+
+.lista_talleres {
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.taller_registro {
+  display: flex;
+  height: 225px;
+}
+
+.info_taller {
+  width: 300px;
+  padding: 15px;
+  box-sizing: content-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--color_principal);
+  border-radius: 25px;
+}
+
+.boton_taller {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
+  border-radius: 25px;
+  background-color: var(--color_principal);
+  color: var(--color_fondo);
+  cursor: pointer;
+  transition: background-color 0.2s ease-in;
+}
+
+.boton_taller:hover {
+  background-color: var(--color_secundario);
+}
+
+.boton_taller p {
+  margin: 0;
+  user-select: none;
+}
+
+.boton_taller i {
+  font-size: 20px;
+  user-select: none;
+}
+
+.opciones_taller {
+  width: 0px;
+  height: 0px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 10px;
+  border-radius: 0 25px 25px 0;
+}
 
 /* ************************************************* */
 /* Inscripciones */

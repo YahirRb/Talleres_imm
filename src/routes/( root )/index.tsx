@@ -1,14 +1,14 @@
 import { component$, useSignal, useStylesScoped$ } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
-import { JSX } from "@builder.io/qwik/jsx-runtime";
+import type { JSX } from "@builder.io/qwik/jsx-runtime";
 
-import { AgregarTaller, MenuDefault } from "./menus_index";
+import { MenuDefault, AgregarTaller, ListaTalleres } from "./menus_index";
 import styles from "./index.css?inline";
 
 const menus: { [key: string]: JSX.Element } = {
   default: <MenuDefault />,
   agregar_taller: <AgregarTaller />,
-  lista_talleres: <></>,
+  lista_talleres: <ListaTalleres />,
   tomar_asistencias: <></>,
 };
 
@@ -26,8 +26,8 @@ export default component$(() => {
   useStylesScoped$(styles);
 
   const menu_expandido = useSignal(false);
-  const menu_index = useSignal("agregar_taller");
-  let menu: JSX.Element = menus[menu_index.value];
+  const menu_index = useSignal("lista_talleres");
+  const menu: JSX.Element = menus[menu_index.value];
 
   return (
     <>
@@ -58,8 +58,8 @@ export default component$(() => {
           <span
             class="navbar_item"
             onClick$={(event) => {
-              let ventana = window.open("/inscripciones", "_blank");
-              let boton = event.target as HTMLElement;
+              const ventana = window.open("/inscripciones", "_blank");
+              const boton = event.target as HTMLElement;
               boton.blur();
               ventana?.focus();
             }}
