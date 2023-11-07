@@ -26,7 +26,7 @@ export default component$(() => {
   useStylesScoped$(styles);
 
   const menu_expandido = useSignal(false);
-  const menu_index = useSignal("lista_talleres");
+  const menu_index = useSignal("agregar_taller");
   const menu: JSX.Element = menus[menu_index.value];
 
   return (
