@@ -5,7 +5,6 @@ from rest_framework import serializers
 class Empleado(models.Model):
      nombre=models.TextField()
      apellidos=models.TextField() 
-     edad=models.IntegerField()
      sexo=models.CharField(max_length=9)
      correo=models.TextField()
      es_activo= models.BooleanField(default=True),
