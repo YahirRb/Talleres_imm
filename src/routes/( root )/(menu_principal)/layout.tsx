@@ -1,15 +1,22 @@
-import { component$, useSignal, useStylesScoped$ } from "@builder.io/qwik";
-import type { DocumentHead } from "@builder.io/qwik-city";
-import { JSX } from "@builder.io/qwik/jsx-runtime";
+import {
+  component$,
+  Slot,
+  useSignal,
+  useStylesScoped$,
+} from "@builder.io/qwik";
+import { useNavigate, type RequestHandler } from "@builder.io/qwik-city";
 
-import { AgregarTaller, MenuDefault } from "./menus_index";
-import styles from "./index.css?inline";
+import styles from "./layout.css?inline";
 
-const menus: { [key: string]: JSX.Element } = {
-  default: <MenuDefault />,
-  agregar_taller: <AgregarTaller />,
-  lista_talleres: <></>,
-  tomar_asistencias: <></>,
+export const onGet: RequestHandler = async ({ cacheControl }) => {
+  // Control caching for this request for best performance and to reduce hosting costs:
+  // https://qwik.builder.io/docs/caching/
+  cacheControl({
+    // Always serve a cached response by default, up to a week stale
+    staleWhileRevalidate: 60 * 60 * 24 * 7,
+    // Max once every 5 seconds, revalidate on the server to get a fresh version of this page
+    maxAge: 5,
+  });
 };
 
 function seleccionarOpcion(id: string) {
@@ -26,8 +33,7 @@ export default component$(() => {
   useStylesScoped$(styles);
 
   const menu_expandido = useSignal(false);
-  const menu_index = useSignal("agregar_taller");
-  let menu: JSX.Element = menus[menu_index.value];
+  const nav = useNavigate();
 
   return (
     <>
@@ -38,7 +44,7 @@ export default component$(() => {
             id="agregar_taller"
             onClick$={() => {
               seleccionarOpcion("agregar_taller");
-              menu_index.value = "agregar_taller";
+              nav("/talleres/agregar");
             }}
           >
             <i class="bi bi-plus-square-fill"></i>
@@ -49,7 +55,7 @@ export default component$(() => {
             id="lista_talleres"
             onClick$={() => {
               seleccionarOpcion("lista_talleres");
-              menu_index.value = "lista_talleres";
+              nav("/talleres/lista");
             }}
           >
             <i class="bi bi-list-task"></i>
@@ -58,8 +64,8 @@ export default component$(() => {
           <span
             class="navbar_item"
             onClick$={(event) => {
-              let ventana = window.open("/inscripciones", "_blank");
-              let boton = event.target as HTMLElement;
+              const ventana = window.open("/inscripciones", "_blank");
+              const boton = event.target as HTMLElement;
               boton.blur();
               ventana?.focus();
             }}
@@ -72,7 +78,7 @@ export default component$(() => {
             id="tomar_asistencias"
             onClick$={() => {
               seleccionarOpcion("tomar_asistencias");
-              menu_index.value = "tomar_asistencias";
+              nav("/toma_asistencia");
             }}
           >
             <i class="bi bi-qr-code-scan"></i>
@@ -81,7 +87,7 @@ export default component$(() => {
           <span
             class="navbar_item"
             onClick$={() => {
-              window.location.href = "/login";
+              nav("/login");
             }}
             onMouseEnter$={() => {
               const icono_puerta = document.getElementById(
@@ -124,18 +130,10 @@ export default component$(() => {
             <i class="bi bi-arrow-bar-right" id="btn_expandMenu"></i>
           </button>
         </nav>
-        <div class="contenido_menu">{menu}</div>
+        <section class="contenido_menu">
+          <Slot />
+        </section>
       </main>
     </>
   );
 });
-
-export const head: DocumentHead = {
-  title: "Gestión de talleres IMM",
-  meta: [
-    {
-      name: "description",
-      content: "Qwik site description",
-    },
-  ],
-};

@@ -1,33 +1,9 @@
-import { component$, useSignal, useStylesScoped$ } from "@builder.io/qwik";
+import { component$, useStylesScoped$ } from "@builder.io/qwik";
+import { useLocation } from "@builder.io/qwik-city";
 
-import "./menus_index.css";
+import styles from "../../agregar/index.css?inline";
 
-export const MenuDefault = component$(() => {
-  const nombre = "{nombre del empleado}";
-  return (
-    <>
-      <div class="cont_bienvenida">
-        <p class="bienvenida">Buen dia {nombre}</p>
-      </div>
-    </>
-  );
-});
-
-interface MesesProps {
-  value: number;
-  mes: string;
-  selected?: boolean;
-}
-
-const Mes = component$<MesesProps>((props) => {
-  if (props.selected)
-    return (
-      <option value={props.value} selected>
-        {props.mes}
-      </option>
-    );
-  return <option value={props.value}>{props.mes}</option>;
-});
+// import { Mes } from "../../../../menus_index";
 
 const meses = {
   1: "Enero",
@@ -44,28 +20,43 @@ const meses = {
   12: "Diciembre",
 };
 
-const OptsMeses = Object.entries(meses).map(([numeroMes, nombreMes]) => {
-  if (new Date().getMonth() + 1 == Number(numeroMes))
-    return (
-      <Mes
-        key={numeroMes}
-        value={Number(numeroMes)}
-        mes={nombreMes}
-        selected={true}
-      />
-    );
-  return (
-    <Mes
-      key={numeroMes}
-      value={Number(numeroMes)}
-      mes={nombreMes}
-      selected={false}
-    />
-  );
-});
+// const OptsMesesModificar = (mesElegido: string) => {
+//   const mesesJSX = Object.entries(meses).map(([numeroMes, nombreMes]) => {
+//     const mesActual = new Date().getMonth();
+//     if (mesActual == Number(mesElegido))
+//       return (
+//         <Mes
+//           key={numeroMes}
+//           value={Number(numeroMes)}
+//           mes={nombreMes}
+//           elegido={true}
+//         />
+//       );
+//     return (
+//       <Mes
+//         key={numeroMes}
+//         value={Number(numeroMes)}
+//         mes={nombreMes}
+//         elegido={false}
+//       />
+//     );
+//   });
+//   return mesesJSX;
+// };
 
-export const AgregarTaller = component$(() => {
-  const mesTaller = useSignal(String(new Date().getMonth() + 1));
+interface DatosTaller {
+  mes: string;
+  nombre: string;
+  dias: string;
+  cupoMaximo: string;
+  instructor: string;
+}
+
+export default component$(() => {
+  useStylesScoped$(styles);
+
+  const loc = useLocation();
+  const taller: DatosTaller = JSON.parse(loc.params.taller);
 
   return (
     <>
@@ -75,7 +66,7 @@ export const AgregarTaller = component$(() => {
             Taller para el mes de:
           </label>
           <select name="mes_taller" id="mes_taller" class="input_form">
-            {OptsMeses}
+            {/* {OptsMesesModificar(taller.mes)} */}
           </select>
         </span>
         <span class="campo_formulario">
@@ -88,6 +79,7 @@ export const AgregarTaller = component$(() => {
             name="nombre_taller"
             class="input_form"
             placeholder="Ej. Curso para ..."
+            value={taller.nombre}
             required
           />
         </span>
@@ -101,6 +93,7 @@ export const AgregarTaller = component$(() => {
             name="fecha_taller"
             class="input_form"
             placeholder="Ej. 01 o 05,06"
+            value={taller.dias}
             required
           />
         </span>
@@ -114,6 +107,7 @@ export const AgregarTaller = component$(() => {
             name="cupo_taller"
             class="input_form"
             placeholder="Ej. 20"
+            value={taller.cupoMaximo}
             required
           />
         </span>
@@ -127,10 +121,11 @@ export const AgregarTaller = component$(() => {
             name="instructor_taller"
             class="input_form"
             placeholder="Ej. María Perez"
+            value={taller.instructor}
             required
           />
         </span>
-        <input type="submit" class="btn_submit" value="Agregar" />
+        <input type="submit" class="btn_submit" value="Modificar" />
       </form>
     </>
   );
