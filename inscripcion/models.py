@@ -6,7 +6,6 @@ from taller.models import Taller
 class Inscripciones(models.Model):
      nombre=models.TextField()
      apellidos=models.TextField()
-     curp=models.CharField(max_length=18, default="")
      telefono=models.TextField()
      edad=models.IntegerField()
      sexo=models.CharField(max_length=9)

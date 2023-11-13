@@ -31,13 +31,13 @@ class log_in(APIView):
                 login(request, user)
             
                 # Devuelve el estado de código 200_0K indicando que la operación se realizó con exito
-                return Response("Tu frontend no puede con mi back :v",status=status.HTTP_200_OK)
-            else:
-                # Si la autenticación falló devuelve el estado de código 401_UNAUTHORIZED 
-                # indicando que el usuario no esta registrado
-                return Response(status=status.HTTP_401_UNAUTHORIZED)
+                return Response("Login correct",status=status.HTTP_200_OK)
+            
+                
         except :
-            return Response(status=status.HTTP_406_NOT_ACCEPTABLE)
+            # Si la autenticación falló devuelve el estado de código 401_UNAUTHORIZED 
+            # indicando que el usuario no esta registrado
+            return Response("Login incorrect",status=status.HTTP_401_UNAUTHORIZED)
         
         
 
