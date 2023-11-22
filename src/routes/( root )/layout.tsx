@@ -1,5 +1,5 @@
 import { component$, Slot } from "@builder.io/qwik";
-import type { RequestHandler } from "@builder.io/qwik-city";
+import { routeLoader$, type RequestHandler } from "@builder.io/qwik-city";
 import { Header } from "../../components/header/header";
 
 export const onGet: RequestHandler = async ({ cacheControl }) => {
@@ -12,6 +12,14 @@ export const onGet: RequestHandler = async ({ cacheControl }) => {
     maxAge: 5,
   });
 };
+
+export const useRecuperarTalleres = routeLoader$(async (requestEvent) => {
+  const response = await fetch(
+    "https://talleres-imm.onrender.com/talleres?format=json"
+  );
+  const talleres = await response.json();
+  return talleres;
+});
 
 export default component$(() => {
   return (

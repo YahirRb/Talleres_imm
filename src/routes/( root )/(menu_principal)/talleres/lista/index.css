@@ -1,7 +1,8 @@
 .lista_talleres {
   padding: 50px;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(415px, 1fr));
+  grid-template-rows: repeat(auto-fit, minmax(250px, max-content));
   gap: 25px;
 }
 
@@ -11,7 +12,8 @@
 }
 
 .info_taller {
-  width: 300px;
+  width: 255px;
+  height: 225px;
   padding: 15px;
   box-sizing: content-box;
   display: flex;

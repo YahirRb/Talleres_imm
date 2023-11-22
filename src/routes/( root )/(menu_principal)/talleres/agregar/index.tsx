@@ -1,5 +1,5 @@
 import { component$, useStylesScoped$ } from "@builder.io/qwik";
-import { DocumentHead } from "@builder.io/qwik-city";
+import type { DocumentHead } from "@builder.io/qwik-city";
 
 import styles from "./index.css?inline";
 
@@ -20,18 +20,18 @@ export const Mes = component$<MesesProps>((props) => {
 });
 
 const meses = {
-  1: "Enero",
-  2: "Febrero",
-  3: "Marzo",
-  4: "Abril",
-  5: "Mayo",
-  6: "Junio",
-  7: "Julio",
-  8: "Agosto",
-  9: "Septiembre",
-  10: "Octubre",
-  11: "Noviembre",
-  12: "Diciembre",
+  "01": "Enero",
+  "02": "Febrero",
+  "03": "Marzo",
+  "04": "Abril",
+  "05": "Mayo",
+  "06": "Junio",
+  "07": "Julio",
+  "08": "Agosto",
+  "09": "Septiembre",
+  "10": "Octubre",
+  "11": "Noviembre",
+  "12": "Diciembre",
 };
 
 const OptsMeses = Object.entries(meses).map(([numeroMes, nombreMes]) => {
@@ -55,62 +55,36 @@ const OptsMeses = Object.entries(meses).map(([numeroMes, nombreMes]) => {
   );
 });
 
+
 export default component$(() => {
   useStylesScoped$(styles);
 
   return (
     <>
-      <form class="form_talleres" preventdefault: submit onSubmit$={() => {
+      <form class="form_talleres" preventdefault: submit onSubmit$={(event) => {
         //Aqui se agrega la LOGICA
+        const form = event.target
+        const mesTaller = form.mes_taller.value;
+        const nombreTaller = form.nombre_taller.value;
+        const fechaTaller = form.fecha_taller.value;
+        const cupoTaller = form.cupo_taller.value;
+        const instructorTaller = form.instructor_taller.value;
 
-        let mesTaller;
-        let numMesTaller = document.getElementById("mes_taller");
-        let nombreTaller = document.getElementById("nombre_taller");
-        let fechaTaller = document.getElementById("fecha_taller");
-        let cupoTaller = document.getElementById("cupo_taller");
-        let instructorTaller = document.getElementById("instructor_taller");
-
-        if (numMesTaller.value == 1) {
-          mesTaller = "Enero";
-        } else if (numMesTaller.value == 2) {
-          mesTaller = "Febrero";
-        } else if (numMesTaller.value == 3) {
-          mesTaller = "Marzo";
-        } else if (numMesTaller.value == 4) {
-          mesTaller = "Abril";
-        } else if (numMesTaller.value == 5) {
-          mesTaller = "Mayo";
-        } else if (numMesTaller.value == 6) {
-          mesTaller = "Junio";
-        } else if (numMesTaller.value == 7) {
-          mesTaller = "Julio";
-        } else if (numMesTaller.value == 8) {
-          mesTaller = "Agosto";
-        } else if (numMesTaller.value == 9) {
-          mesTaller = "Septiembre";
-        } else if (numMesTaller.value == 10) {
-          mesTaller = "Octubre";
-        } else if (numMesTaller.value == 11) {
-          mesTaller = "Noviembre";
-        } else if (numMesTaller.value == 12) {
-          mesTaller = "Diciembre";
-        }
-
-        console.log(mesTaller);
-        console.log(nombreTaller.value);
-        console.log(fechaTaller.value);
-        console.log(cupoTaller.value);
-        console.log(instructorTaller.value);
+        console.log("Mes: ", mesTaller);
+        console.log("Nombre: ", nombreTaller);
+        console.log("Fecha: ", fechaTaller);
+        console.log("Cupo: ", cupoTaller);
+        console.log("Instructor: ", instructorTaller);
 
         fetch("https://talleres-imm.onrender.com/taller/registro", {
           method: "POST", headers: {
             "Content-Type": "application/json"
           }, body: JSON.stringify({
-                nombre : nombreTaller.value,
+                nombre : nombreTaller,
                 mes : mesTaller,
-                dias : fechaTaller.value,
-                cupo : cupoTaller.value,
-                instructor : instructorTaller.value
+                dias : fechaTaller,
+                cupo : cupoTaller,
+                instructor : instructorTaller
             })
         })
           .then(response => {

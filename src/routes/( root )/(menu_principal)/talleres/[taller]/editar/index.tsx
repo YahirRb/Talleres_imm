@@ -2,47 +2,45 @@ import { component$, useStylesScoped$ } from "@builder.io/qwik";
 import { useLocation } from "@builder.io/qwik-city";
 
 import styles from "../../agregar/index.css?inline";
-
-// import { Mes } from "../../../../menus_index";
+import { Mes } from "../../agregar";
 
 const meses = {
-  1: "Enero",
-  2: "Febrero",
-  3: "Marzo",
-  4: "Abril",
-  5: "Mayo",
-  6: "Junio",
-  7: "Julio",
-  8: "Agosto",
-  9: "Septiembre",
-  10: "Octubre",
-  11: "Noviembre",
-  12: "Diciembre",
+  "01": "Enero",
+  "02": "Febrero",
+  "03": "Marzo",
+  "04": "Abril",
+  "05": "Mayo",
+  "06": "Junio",
+  "07": "Julio",
+  "08": "Agosto",
+  "09": "Septiembre",
+  "10": "Octubre",
+  "11": "Noviembre",
+  "12": "Diciembre",
 };
 
-// const OptsMesesModificar = (mesElegido: string) => {
-//   const mesesJSX = Object.entries(meses).map(([numeroMes, nombreMes]) => {
-//     const mesActual = new Date().getMonth();
-//     if (mesActual == Number(mesElegido))
-//       return (
-//         <Mes
-//           key={numeroMes}
-//           value={Number(numeroMes)}
-//           mes={nombreMes}
-//           elegido={true}
-//         />
-//       );
-//     return (
-//       <Mes
-//         key={numeroMes}
-//         value={Number(numeroMes)}
-//         mes={nombreMes}
-//         elegido={false}
-//       />
-//     );
-//   });
-//   return mesesJSX;
-// };
+const OptsMesesModificar = (mesElegido: string) => {
+  const mesesJSX = Object.entries(meses).map(([numeroMes, nombreMes]) => {
+    if (numeroMes == mesElegido)
+      return (
+        <Mes
+          key={numeroMes}
+          value={Number(numeroMes)}
+          mes={nombreMes}
+          elegido={true}
+        />
+      );
+    return (
+      <Mes
+        key={numeroMes}
+        value={Number(numeroMes)}
+        mes={nombreMes}
+        elegido={false}
+      />
+    );
+  });
+  return mesesJSX;
+};
 
 interface DatosTaller {
   mes: string;
@@ -58,6 +56,8 @@ export default component$(() => {
   const loc = useLocation();
   const taller: DatosTaller = JSON.parse(loc.params.taller);
 
+  console.log(OptsMesesModificar(taller.mes));
+
   return (
     <>
       <form class="form_talleres" preventdefault:submit onSubmit$={() => {}}>
@@ -66,7 +66,7 @@ export default component$(() => {
             Taller para el mes de:
           </label>
           <select name="mes_taller" id="mes_taller" class="input_form">
-            {/* {OptsMesesModificar(taller.mes)} */}
+            {OptsMesesModificar(taller.mes)}
           </select>
         </span>
         <span class="campo_formulario">
