@@ -1,15 +1,50 @@
 import { component$, useStylesScoped$ } from "@builder.io/qwik";
-import type { DocumentHead } from "@builder.io/qwik-city";
+import { useNavigate, type DocumentHead } from "@builder.io/qwik-city";
 
 import styles from "../registro.css?inline";
 
 export default component$(() => {
   useStylesScoped$(styles);
+  const nav = useNavigate();
 
   return (
     <>
       <main class="main_registro">
-        <form class="formulario" id="form_registro" onSubmit$={(event) => {}}>
+        <form class="formulario" id="form_registro" preventdefault: submit onSubmit$={(event) => {
+          //Aqui se agrega la LOGICA
+          let nombre_Registro = document.getElementById("nombres");
+          let apellido_Registro = document.getElementById("apellidos");
+          let usuario_Registro = document.getElementById("nombreUsuario");
+          let email_Registro = document.getElementById("correo");
+          let contrasena_Registro = document.getElementById("contrasena");
+          console.log("Nombre del usuario:" + nombre_Registro.value);
+          console.log("Apellido del usuario:" + apellido_Registro.value);
+          console.log("Nickname del usuario:" + usuario_Registro.value);
+          console.log("Email del usuario:" + email_Registro.value);
+          console.log("Contraseña del usuario:" + contrasena_Registro.value);
+           
+          fetch("https://talleres-imm.onrender.com/empleado/registro", {
+            method: "POST", headers: {
+              "Content-Type": "application/json"
+            }, body: JSON.stringify({
+              nombre: nombre_Registro.value,
+              apellidos: apellido_Registro.value,
+              correo: email_Registro.value,
+              es_activo: true,
+              password: contrasena_Registro.value,
+              usuario: usuario_Registro.value
+            })
+          })
+            .then(response => {
+              if (response.ok) {
+                //alert(response.status)
+                nav("/login");
+                //return response.text();
+              } else {
+                throw new Error('Error en la petición POST');
+              }
+            })
+        }}>
           <span class="campo_formulario" id="campo_nombres">
             <label for="nombres">Nombre(s)*:</label>
             <input

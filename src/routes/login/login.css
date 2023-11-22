@@ -151,16 +151,13 @@ main {
 }
 
 @media (max-width: 650px) {
-  .cont_logo {
+  .cont_img {
     display: none;
   }
 
-  .img_fondo {
-    display: none;
-  }
-
-  .atribucion {
-    display: none;
+  .logo_login img {
+    width: 0;
+    height: 0;
   }
 
   .login_panel {
