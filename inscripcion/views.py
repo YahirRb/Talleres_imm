@@ -74,12 +74,7 @@ class Inscripcion(APIView):
                     'curp': curp,
                     'taller': id_taller
                 }
-                generar_codigo_qr(data, f'{curp}.png')
-
-                #enviar_correo_con_adjunto('rodriguez111402@gmail.com',"Codigo Qr",
-                 #                         "El siguiente codigo Qr sera util para la toma de asistencia para el taller",
-                  #                        f"{curp}.png")
-                os.remove(f"{curp}.png")
+                
 
                 if usuaria_inscrita.exists() :
                     for usuaria in usuaria_inscrita:
@@ -97,6 +92,12 @@ class Inscripcion(APIView):
                                 serializer.save()
                                 cupo.participantes=cupo.participantes+1
                                 cupo.save()
+                                generar_codigo_qr(data, f'{curp}.png')
+
+                                enviar_correo_con_adjunto('rodriguez111402@gmail.com',"Codigo Qr",
+                                          "El siguiente codigo Qr sera util para la toma de asistencia para el taller",
+                                          f"{curp}.png")
+                                os.remove(f"{curp}.png")
                                 return Response(status=HTTP_201_CREATED)
                             else:
                                 return Response('si')
@@ -110,6 +111,12 @@ class Inscripcion(APIView):
                     serializer.save()
                     cupo.participantes=cupo.participantes+1
                     cupo.save()
+                    generar_codigo_qr(data, f'{curp}.png')
+
+                    enviar_correo_con_adjunto('rodriguez111402@gmail.com',"Codigo Qr",
+                                          "El siguiente codigo Qr sera util para la toma de asistencia para el taller",
+                                          f"{curp}.png")
+                    os.remove(f"{curp}.png")
             
                     return Response("Usuaria registrada",status=HTTP_201_CREATED)
         else:
