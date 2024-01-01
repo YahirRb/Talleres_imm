@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
 from pathlib import Path
+from datetime import timedelta
+
+from django.conf import settings
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,16 +24,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY', default='your secret key')
+#SECRET_KEY = 'django-insecure-!8%_wltb_k2_)g_oyo7x59xdwy(g$z23n+!t0xkq+1b+anmojq'
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'RENDER' not in os.environ
+#DEBUG=True
 
 ALLOWED_HOSTS = []
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -48,8 +54,32 @@ INSTALLED_APPS = [
     'empleado',
     'taller',
     'asistencia',
+    'rest_framework.authtoken',
+     'rest_framework_simplejwt',
   
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        #'rest_framework.authentication.TokenAuthentication',
+        # Otras clases de autenticación si las necesitas
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(hours=1),
+    "REFRESH_TOKEN_LIFETIME": timedelta(hours=12),
+    #"ROTATE_REFRESH_TOKENS": True,
+    #"BLACKLIST_AFTER_ROTATION": False,
+    "ALGORITHM": "HS256",
+    "SIGNING_KEY": settings.SECRET_KEY,
+    "AUTH_HEADER_TYPES": ("Bearer",),
+    "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
+    "USER_ID_FIELD": "username",
+    "USER_ID_CLAIM": "username",
+}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -98,7 +128,15 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
+'''
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',  # Ejemplo con SQLite
+        'NAME': BASE_DIR / 'db.sqlite3',
+        # Otras configuraciones como 'USER', 'PASSWORD', 'HOST', 'PORT' si estás utilizando otro motor de base de datos
+    }
+}
+'''
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -148,3 +186,11 @@ if not DEBUG:
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Configuración para enviar correos electrónicos
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587  # Puerto de Gmail para SMTP
+EMAIL_USE_TLS = True  # Habilitar TLS para seguridad
+EMAIL_HOST_USER = 'confeticonfiesta1@gmail.com'  # Tu dirección de correo electrónico
+EMAIL_HOST_PASSWORD = 'vgeb upoi mrjv pajv'  # La contraseña de tu correo electrónico

@@ -5,6 +5,8 @@ from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST,HTTP_201_CRE
 from .models import Empleado, EmpleadoSerializer
 from django.contrib.auth.models import User
 from django.db.models import Q
+from rest_framework.decorators import  permission_classes
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 
@@ -24,7 +26,7 @@ class Registro(APIView):
 
             # Crea un nuevo usuario en la tabla User
             user = User.objects.create_user(
-                username=empleado.nombre,
+                username=empleado.usuario,
                 email=empleado.correo,
                 password=datos.get('password')
             )
@@ -35,6 +37,7 @@ class Registro(APIView):
             # Si los datos no son válidos, devuelve una respuesta de error
             return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
         
+@permission_classes([IsAuthenticated])
 class Lista(APIView):
     def get(self,request):
         registros = Empleado.objects.all()
@@ -44,6 +47,7 @@ class Lista(APIView):
 
         return Response(resultados.data)
 
+@permission_classes([IsAuthenticated])
 class Consulta(APIView):
     def post(self, request):
         dato=request.data.get('dato')
@@ -56,7 +60,8 @@ class Consulta(APIView):
         datos_empleado=EmpleadoSerializer(empleado, many=True)
         
         return Response(datos_empleado.data)
-    
+
+@permission_classes([IsAuthenticated])  
 class Estado(APIView):
     def post(self,request):
         empleado= request.data.get('id')

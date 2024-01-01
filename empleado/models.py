@@ -7,7 +7,8 @@ class Empleado(models.Model):
      apellidos=models.TextField() 
      correo=models.TextField()
      es_activo= models.BooleanField(default=True),
-     usuario=models.TextField()
+     usuario=models.TextField(primary_key=True, unique=True)
+     #username
      
 class EmpleadoSerializer(serializers.ModelSerializer):
     class Meta:
