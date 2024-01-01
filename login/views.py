@@ -28,7 +28,7 @@ class log_in(TokenObtainPairView):
         username=request.data.get('username')
         response = super().post(request, *args, **kwargs)
         if response.status_code == 200:
-            user= Empleado.objects.get(nombre=username)
+            user= Empleado.objects.get(usuario=username)
             # Obtener el token de acceso del cuerpo de la respuesta
             token = response.data.get('access')
             # Decodificar el token para acceder a su payload
