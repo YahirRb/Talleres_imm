@@ -5,10 +5,9 @@ from rest_framework.response import Response
 from rest_framework.status import HTTP_404_NOT_FOUND, HTTP_204_NO_CONTENT, HTTP_201_CREATED,HTTP_400_BAD_REQUEST
 from django.db.models import Q
 from datetime import datetime
-import locale
 from rest_framework.decorators import authentication_classes, permission_classes
 from rest_framework.permissions import IsAuthenticated
-locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
+
 # Create your views here.
 
 
