@@ -36,7 +36,6 @@ PySide2==5.15.2.1
 PySocks==1.7.1
 pytube==15.0.0
 pytz==2023.3
-pywin32==306
 qrcode==7.4.2
 regex==2022.10.31
 rpyc==5.3.1
