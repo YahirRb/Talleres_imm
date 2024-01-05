@@ -1,6 +1,8 @@
-import { component$, Slot } from "@builder.io/qwik";
+import { component$, Slot, useStylesScoped$ } from "@builder.io/qwik";
 import { routeLoader$, type RequestHandler } from "@builder.io/qwik-city";
 import { Header } from "../../components/header/header";
+
+import styles from "./layout.css?inline";
 
 export const onGet: RequestHandler = async ({ cacheControl }) => {
   // Control caching for this request for best performance and to reduce hosting costs:
@@ -15,17 +17,21 @@ export const onGet: RequestHandler = async ({ cacheControl }) => {
 
 export const useRecuperarTalleres = routeLoader$(async (requestEvent) => {
   const response = await fetch(
-    "https://talleres-imm.onrender.com/talleres?format=json"
+    "https://talleres-imm-aziv.onrender.com/talleres"
   );
   const talleres = await response.json();
   return talleres;
 });
 
 export default component$(() => {
+  useStylesScoped$(styles);
+
   return (
     <>
       <Header />
-      <Slot />
+      <div class="cont_main">
+        <Slot />
+      </div>
     </>
   );
 });

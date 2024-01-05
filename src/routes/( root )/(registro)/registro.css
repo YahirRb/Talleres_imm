@@ -4,6 +4,7 @@ body {
 
 .main_registro {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   flex-grow: 1;
@@ -40,7 +41,7 @@ input[type="number"] {
 }
 
 .campo_formulario input {
-  padding: 7px 10px;
+  padding: 10px;
   background-color: var(--color_fondo);
   color: var(--color_texto);
   border: 2px solid var(--color_principal);
@@ -77,10 +78,16 @@ input[type="number"] {
   background-color: var(--color_secundario);
 }
 
+.btn_submit:disabled {
+  color: #747474;
+  border: 2px solid #747474;
+  background-color: var(--color_fondo);
+  cursor: not-allowed;
+}
+
 @media (max-width: 500px) {
   .main_registro {
     overflow-y: auto;
-    align-items: flex-start;
   }
 
   .titulo_principal {
@@ -120,10 +127,15 @@ input[type="number"] {
   }
 }
 
-@media (max-height: 595px) {
+@media (max-height: 704px) {
   main {
     overflow-y: auto;
   }
+
+  .main_registro {
+    justify-content: flex-start;
+  }
+
 }
 
 .main_recuperarcontra {

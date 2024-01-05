@@ -47,3 +47,16 @@
 .btn_submit:hover {
   background-color: var(--color_secundario);
 }
+
+@media (max-width: 611px) {
+  .form_talleres {
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  .campo_formulario {
+    width: 80%;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+}

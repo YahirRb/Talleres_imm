@@ -1,8 +1,15 @@
 import { component$, useStylesScoped$ } from "@builder.io/qwik";
-import { useLocation } from "@builder.io/qwik-city";
+import {
+  DocumentHead,
+  Link,
+  routeLoader$,
+  useLocation,
+  useNavigate,
+} from "@builder.io/qwik-city";
 
 import styles from "../../agregar/index.css?inline";
 import { Mes } from "../../agregar";
+import Swal from "sweetalert2";
 
 const meses = {
   "01": "Enero",
@@ -20,6 +27,7 @@ const meses = {
 };
 
 const OptsMesesModificar = (mesElegido: string) => {
+  console.log(mesElegido);
   const mesesJSX = Object.entries(meses).map(([numeroMes, nombreMes]) => {
     if (numeroMes == mesElegido)
       return (
@@ -43,24 +51,92 @@ const OptsMesesModificar = (mesElegido: string) => {
 };
 
 interface DatosTaller {
+  id: number;
   mes: string;
   nombre: string;
   dias: string;
-  cupoMaximo: string;
+  cupo: string;
   instructor: string;
 }
 
+const useDetallesTaller = routeLoader$(async (requestEvent) => {
+  const response = await fetch(
+    `https://talleres-imm-aziv.onrender.com/talleres/${requestEvent.params.taller}`
+  );
+  const taller = await response.json();
+  return taller as DatosTaller;
+});
+
 export default component$(() => {
   useStylesScoped$(styles);
+  const nav = useNavigate();
 
-  const loc = useLocation();
-  const taller: DatosTaller = JSON.parse(loc.params.taller);
-
-  console.log(OptsMesesModificar(taller.mes));
+  const taller: DatosTaller = useDetallesTaller().value;
+  console.log(taller);
 
   return (
     <>
-      <form class="form_talleres" preventdefault:submit onSubmit$={() => {}}>
+      <nav class="nav_breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <Link href="/talleres/lista/" class="enlaces">
+              Talleres
+            </Link>
+          </li>
+          <li class="breadcrumb-item active">Editar</li>
+        </ol>
+      </nav>
+      <form
+        class="form_talleres"
+        preventdefault:submit
+        onSubmit$={(event) => {
+          const form = event.target as HTMLFormElement;
+          const mesTaller = form.mes_taller.value;
+          const nombreTaller = form.nombre_taller.value;
+          const fechaTaller = form.fecha_taller.value;
+          const cupoTaller = form.cupo_taller.value;
+          const instructorTaller = form.instructor_taller.value;
+
+          console.log(mesTaller);
+          console.log(nombreTaller);
+          console.log(fechaTaller);
+          console.log(cupoTaller);
+          console.log(instructorTaller);
+
+          fetch(
+            `https://talleres-imm-aziv.onrender.com/talleres/${taller.id}`,
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                nombre: nombreTaller,
+                mes: mesTaller,
+                dias: fechaTaller,
+                cupo: cupoTaller,
+                instructor: instructorTaller,
+              }),
+            }
+          ).then((response) => {
+            console.log(response);
+            if (response.ok) {
+              if (response.status == 201) {
+                Swal.fire({
+                  text: "Taller agregado correctamente",
+                  icon: "success",
+                  showConfirmButton: true,
+                  confirmButtonColor: "#d43b69",
+                }).then(() => {
+                  window.location.href = "/talleres/lista/";
+                });
+              }
+            } else {
+              throw new Error("Error en la peticion PUT");
+            }
+          });
+        }}
+      >
         <span class="campo_formulario">
           <label for="mes_taller" class="etiqueta_form">
             Taller para el mes de:
@@ -107,7 +183,7 @@ export default component$(() => {
             name="cupo_taller"
             class="input_form"
             placeholder="Ej. 20"
-            value={taller.cupoMaximo}
+            value={taller.cupo}
             required
           />
         </span>
@@ -130,3 +206,13 @@ export default component$(() => {
     </>
   );
 });
+
+export const head: DocumentHead = {
+  title: "Editar taller",
+  meta: [
+    {
+      name: "description",
+      content: "Descripción",
+    },
+  ],
+};

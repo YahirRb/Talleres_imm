@@ -5,8 +5,6 @@
   --color_secundario: #b121ff;
   --color_fondo: #ffffff;
   --color_texto: #000000;
-  font-family: "Fira Sans", Verdana, Geneva, Tahoma, sans-serif;
-  font-size: 16px;
 }
 
 html {
@@ -18,9 +16,28 @@ html {
 body {
   width: 100%;
   height: 100%;
-  box-sizing: content-box;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  font-family: "Fira Sans", Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 16px;
+}
+
+#overlay {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.25);
+  z-index: 9;
+}
+
+.titulos {
+  margin: 0;
+  font-family: "Oswald", Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 20px;
 }
 
 .enlaces {
@@ -31,4 +48,8 @@ body {
 .enlaces:hover {
   color: var(--color_secundario);
   text-decoration: underline;
+}
+
+.breadcrumb {
+  background-color: var(--color_fondo);
 }

@@ -8,7 +8,12 @@ export default component$(() => {
 
   return (
     <>
-      <main class="main_recuperarcontra" onSubmit$={(event) => {}}>
+      <main
+        class="main_recuperarcontra"
+        onSubmit$={(event) => {
+          console.log("Olam");
+        }}
+      >
         <form class="formulario" id="form_recuperarcontra">
           <span class="campo_formulario">
             <label for="correo">Correo electrónico:</label>

@@ -1,7 +1,8 @@
 import { component$, useStylesScoped$ } from "@builder.io/qwik";
-import type { DocumentHead } from "@builder.io/qwik-city";
+import { useNavigate, type DocumentHead } from "@builder.io/qwik-city";
 
 import styles from "./index.css?inline";
+import Swal from "sweetalert2";
 
 interface MesesProps {
   value: number;
@@ -55,49 +56,60 @@ const OptsMeses = Object.entries(meses).map(([numeroMes, nombreMes]) => {
   );
 });
 
-
 export default component$(() => {
   useStylesScoped$(styles);
+  const nav = useNavigate();
 
   return (
     <>
-      <form class="form_talleres" preventdefault: submit onSubmit$={(event) => {
-        //Aqui se agrega la LOGICA
-        const form = event.target
-        const mesTaller = form.mes_taller.value;
-        const nombreTaller = form.nombre_taller.value;
-        const fechaTaller = form.fecha_taller.value;
-        const cupoTaller = form.cupo_taller.value;
-        const instructorTaller = form.instructor_taller.value;
+      <form
+        class="form_talleres"
+        preventdefault: submit
+        onSubmit$={(event) => {
+          //Aqui se agrega la LOGICA
+          const form = event.target as HTMLFormElement;
+          const mesTaller = form.mes_taller.value;
+          const nombreTaller = form.nombre_taller.value;
+          const fechaTaller = form.fecha_taller.value;
+          const cupoTaller = form.cupo_taller.value;
+          const instructorTaller = form.instructor_taller.value;
 
-        console.log("Mes: ", mesTaller);
-        console.log("Nombre: ", nombreTaller);
-        console.log("Fecha: ", fechaTaller);
-        console.log("Cupo: ", cupoTaller);
-        console.log("Instructor: ", instructorTaller);
+          // console.log("Mes: ", mesTaller);
+          // console.log("Nombre: ", nombreTaller);
+          // console.log("Fecha: ", fechaTaller);
+          // console.log("Cupo: ", cupoTaller);
+          // console.log("Instructor: ", instructorTaller);
 
-        fetch("https://talleres-imm.onrender.com/taller/registro", {
-          method: "POST", headers: {
-            "Content-Type": "application/json"
-          }, body: JSON.stringify({
-                nombre : nombreTaller,
-                mes : mesTaller,
-                dias : fechaTaller,
-                cupo : cupoTaller,
-                instructor : instructorTaller
-            })
-        })
-          .then(response => {
+          fetch("https://talleres-imm-aziv.onrender.com/talleres/", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              nombre: nombreTaller,
+              mes: mesTaller,
+              dias: fechaTaller,
+              cupo: cupoTaller,
+              instructor: instructorTaller,
+            }),
+          }).then((response) => {
             if (response.ok) {
-              alert(response.status)
-              //nav("/login");
-              return response.text();
+              if (response.status == 201) {
+                Swal.fire({
+                  text: "Taller agregado correctamente",
+                  icon: "success",
+                  showConfirmButton: true,
+                  confirmButtonColor: "#d43b69",
+                }).then(() => {
+                  form.reset();
+                });
+              }
             } else {
-              throw new Error('Error en la petición POST');
+              throw new Error("Error en la petición POST");
             }
-          })
-
-      }}>
+          });
+        }}
+      >
         <span class="campo_formulario">
           <label for="mes_taller" class="etiqueta_form">
             Taller para el mes de:

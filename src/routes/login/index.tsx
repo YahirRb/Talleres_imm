@@ -4,6 +4,7 @@ import { useNavigate, type DocumentHead } from "@builder.io/qwik-city";
 import styles from "./login.css?inline";
 import IMMLogo from "~/media/assets/logo.png?jsx";
 import BGLogin from "~/media/assets/img_login.jpg?jsx";
+import Swal from "sweetalert2";
 
 export default component$(() => {
   useStylesScoped$(styles);
@@ -42,40 +43,49 @@ export default component$(() => {
               let usuario = event.target.campo_usuario.value;
               let contra = event.target.campo_contrasena.value;
               //nav("/");
-              console.log(usuario);
-              console.log(contra);
+              // console.log(usuario);
+              // console.log(contra);
 
-              fetch("https://talleres-imm.onrender.com/api/login", {
-                method: "POST", headers: {
-                  "Content-Type": "application/json"
-                }, body: JSON.stringify({
-                  correo: usuario,
-                  password: contra
-                })
+              Swal.showLoading();
+              fetch("https://talleres-imm-aziv.onrender.com/login", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  identificador: usuario,
+                  contrasena: contra,
+                }),
               })
-                .then(response => {
-                  if (response.ok) {
-                    //alert(response.status)
-                    nav("/");
-                    //return response.text();
+                .then((response) => {
+                  Swal.close();
+                  if (response.ok && response.status == 200) {
+                    return response.json();
                   } else {
-                    throw new Error('Error en la petición POST');
+                    console.log(response.status);
+                    Swal.fire({
+                      text: "Usuario o contraseña incorrecta",
+                      icon: "error",
+                      confirmButtonText: "Ok",
+                      confirmButtonColor: "#d43b69",
+                    });
                   }
                 })
-              /**
-              .then(responseText => {
-                const data = JSON.parse(responseText);
-                console.log(data);
-              })
-              .catch(error => {
-                console.error('Error:', error);
-              })
-              .finally(() => console.log("Peticion concluida")
-              );
-              */
+                .then((data) => {
+                  localStorage.setItem("usuario", JSON.stringify(data));
+                  nav("/");
+                })
+                .catch(() => {
+                  Swal.close();
+                  Swal.fire({
+                    text: "Hubo un error, intente nuevamente",
+                    icon: "error",
+                    confirmButtonText: "Ok",
+                    confirmButtonColor: "#d43b69",
+                  });
+                });
             }}
           >
-
             <span class="cont_campo">
               <label for="campo_usuario">Usuario: </label>
               <input
@@ -114,14 +124,7 @@ export default component$(() => {
               />
               <i class="bi bi-eye-fill ojo" id="ojo_contrasena"></i>
             </span>
-            <input
-              type="submit"
-              value="Iniciar sesión"
-              class="btn_login"
-              onClick$={() => {
-                // window.location.href = "/";
-              }}
-            />
+            <input type="submit" value="Iniciar sesión" class="btn_login" />
             <span class="recuperar_registrarse">
               <p class="rec_reg_texto">¿Has olvidado tu contraseña?</p>
               <a href="/recuperar-contrasena" class="enlaces">

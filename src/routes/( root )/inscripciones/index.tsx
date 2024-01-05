@@ -3,9 +3,10 @@ import { useNavigate, type DocumentHead } from "@builder.io/qwik-city";
 import { useRecuperarTalleres } from "../layout";
 
 import styles from "./index.css?inline";
+import Swal from "sweetalert2";
 
 interface TallerProp {
-  id: number;
+  id_doc: number;
   nombre: string;
   mes: string;
   dias: string;
@@ -17,7 +18,7 @@ const TallerInscripcion = component$<TallerProp>((taller) => {
   const nav = useNavigate();
 
   return (
-    <div class="taller">
+    <div class="taller" key={taller.id_doc}>
       <p>
         <strong>Nombre:</strong> {taller.nombre}
       </p>
@@ -27,9 +28,22 @@ const TallerInscripcion = component$<TallerProp>((taller) => {
       <p>
         <strong>Cupo disponible: </strong> {taller.cupo}
       </p>
-      <span class="btn_inscribirse" onClick$={() => {
-        nav(`/inscripciones/${taller.id}`)
-      }} >
+      <span
+        class="btn_inscribirse"
+        onClick$={() => {
+          if (taller.cupo <= 0) {
+            Swal.fire({
+              title: "Taller lleno",
+              text: "No es posible que se inscriban mas personas",
+              icon: "error",
+              showConfirmButton: true,
+              confirmButtonColor: "#d43b69",
+            });
+          } else {
+            nav(`/inscripciones/${taller.id_doc}`);
+          }
+        }}
+      >
         <p>Inscribirse</p>
       </span>
     </div>
@@ -41,7 +55,7 @@ const lista_talleres = (talleres: object) => {
   for (let i = 0; i < talleres.length; i++) {
     let tallerJSX = (
       <TallerInscripcion
-        id={talleres[i].id}
+        id_doc={talleres[i].id_doc}
         nombre={talleres[i].nombre}
         mes={talleres[i].mes}
         dias={talleres[i].dias}
@@ -56,6 +70,7 @@ const lista_talleres = (talleres: object) => {
 export default component$(() => {
   useStylesScoped$(styles);
   const talleres = useRecuperarTalleres().value;
+  // console.log(talleres);
 
   return <main>{lista_talleres(talleres)}</main>;
 });

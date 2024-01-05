@@ -1,9 +1,11 @@
 .banner {
   display: flex;
+  width: 100vw;
+  height: 55px;
   justify-content: space-between;
   align-items: center;
   padding: 10px 25px;
-  box-sizing: content-box;
+  box-sizing: border-box;
   border-bottom: 1px solid var(--color_principal);
 }
 
